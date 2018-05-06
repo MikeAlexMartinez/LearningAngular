@@ -1,0 +1,100 @@
+Why Angular?
+
+More Expressive,
+
+Powerful Data Binding
+
+Modularity By Design
+
+Built in Back End Integration
+
+New Angular is Faster, Modern, Simplified API, Enhances Productivity.
+
+
+## Anatomy of an Angular Application
+
+Application = Component + Component + Component
+              -------------Services------------
+
+Component = Template + class - properties, methods + metadata + CSS
+
+Root => Angular Module => Component - Component - Component
+     <= Feature Angular Module
+
+Sample App Architecture
+
+Welcome Component AppComponent
+Product List Component => Star Component AppComponent index.html
+Product Detail Component => ^
+
+Product Data Service
+
+Can use ES5, ES2015
+
+Typescript => Strong Typing, Great IDE Tooling.
+
+typescript, superset of Javascript.
+- Uses Typescript type definition files.
+- Uses Class-based object-orientation.
+
+Setting up an Angular Application:
+- Create an Application folder
+- Add package definition and configuration files
+- install the packages
+- Create app's Angular Module
+- Create the main.ts file
+- Create the host Web Page (index.html)
+
+Download results of these steps
+- Using quickstart
+- Use Angular CLI
+
+Modules
+- Provides ability to prevent namespace clashing.
+- ES 2015 created spec for moduilarity.
+
+Components
+- class - exported for use elsewhere.
+        - will have properties (type defined with Typescript)
+        - and methods
+        - uses camelcase.
+        - may extend other classes or implement a specified interface.
+- metadata - uses ES6 decorator syntax to mixin information.
+        - includes various properties: selector, template, styling, providers, etc...
+        - prefixed with @
+        - Angular has a range of built in decorators e.g. Component.
+        - templates use {{ double bracket binding }}
+
+Angular Applications are defined withing the NgModule Decorator with a root App component.
+
+Component Checklists
+Class -> Code
+Decorator -> metadata
+import waht we need
+
+Clear name
+  - Use PascalCasing
+  - Append Component to name
+
+export keyword
+
+Data in properties
+  - Appropriate data type
+  - Appropriate default value
+  - camelCase with first letter lowercase
+
+Logic in methods
+ - camelcase for method names
+
+Metadata
+  @Component decorator
+  selctor, prefix for clarity.
+  template for HTML
+  import allows finding of members component needs.
+
+If it's not working:
+  - F12
+  - HTML , close tags, angular directives.
+  - Typescript, close braces
+  - use blog - http://blog.msmvps.com/deborahk/angular-2-getting-started-problem-solver/
+  - post to forum
