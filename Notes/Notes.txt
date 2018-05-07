@@ -98,3 +98,64 @@ If it's not working:
   - Typescript, close braces
   - use blog - http://blog.msmvps.com/deborahk/angular-2-getting-started-problem-solver/
   - post to forum
+
+Templates, Interpolation and Directives
+
+Templates can either be inline with quotes,
+multi-line strings with back-ticks, or with a html document
+used with a 'templateUrl' property.
+
+Interpolation within an angular component involves using 
+{{ double-brackets }} within the template.
+
+## Directives
+
+Template directives - what we use alot of.
+Structural Directive - e.g. *ngIf, *ngFor
+
+## Data Binding & Pipes
+
+Property binding allows us to use [] brackets to use
+a property in an element attribute.
+
+Event Binding uses () curly brackets to identify when to respond.
+
+Two way binding uses [()] to bind two ways. You need to ensure
+you add the FormsModule to allow ngModel to be available.
+
+Pipes use the | character to 'pipe' data through a specfic formatting
+instruction.
+
+You can use the pipe name with parameters separated by a colon :
+
+## More on Components
+
+Strong typing and interfaces allow better checking and Tooling
+
+Encapsulation of styles. (in properties).
+
+Lifecycle hooks allow for key 'life' events of the component
+to be used to make the page more responsive.
+
+Custom Pipes.
+
+Nested Components.
+
+Interfaces - A specification identifying a related set of 
+properties and methods.
+
+A class commits to suporting the specification by implementing 
+the interface. 
+
+Interfaces are for development time only.
+
+Component Lifecycle =>
+  Create = Render = Create and render children = Process Changes = Destroy
+
+OnInit = Lifecycle hook to perform component initialization
+and retrieve data.
+
+OnChanges = Perform action after change to input properties
+
+OnDestroy = clean up anything before component is destroyed.
+
