@@ -137,9 +137,23 @@ Encapsulation of styles. (in properties).
 Lifecycle hooks allow for key 'life' events of the component
 to be used to make the page more responsive.
 
-Custom Pipes.
+## Custom Pipes =>
 
-Nested Components.
+Use @Pipe decorator where we define the name of the pipe.
+
+Then define a class which implements the PipeTransform interface.
+
+This means we need to implement the transform with the first argument is the first parameter, 
+other parameters follow.
+
+We also need to add the pipe to the App component.
+
+Angular doesn't offer filtering pipes because they perform poorly and prevent
+aggressive minification.
+
+Recommend filtering and sorting logic into the component itself.
+
+## Nested Components.
 
 Interfaces - A specification identifying a related set of 
 properties and methods.
@@ -158,4 +172,6 @@ and retrieve data.
 OnChanges = Perform action after change to input properties
 
 OnDestroy = clean up anything before component is destroyed.
+
+
 
