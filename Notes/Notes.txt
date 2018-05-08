@@ -130,6 +130,8 @@ You can use the pipe name with parameters separated by a colon :
 
 ## More on Components
 
+you can use the Angular CLI to create templates for components.
+
 Strong typing and interfaces allow better checking and Tooling
 
 Encapsulation of styles. (in properties).
@@ -173,5 +175,75 @@ OnChanges = Perform action after change to input properties
 
 OnDestroy = clean up anything before component is destroyed.
 
+## Building Nested Components
+
+For our purposes, nest-able means manages fragment of larger view,
+has a selector, communicates with it's container.
+
+Nested Components can communicate using the @Input and @Output decorators, and events (EventEmitter).
+The events can pass data back up the component tree.
 
 
+## Services and Dependency Injection
+
+A Service is a class with a focused purpose.
+
+Used for features that:
+- Are independent from any particular component.
+- Provide shared data or logic across components.
+- Encapsulate external interactions.
+
+Need to Build service, register service and then you can use it.
+
+Register service with Angular (a singleton) and then you can inject it into the component when needed.
+
+When using services we should use the @Injectable decorator.
+
+We want to add the service to the class using the class contructor. We can use the short 
+syntax to make it easier. To retrieve data we should use life cycle hooks.
+
+## Retrieving Data Using HTTP
+
+Observables and Reactive Extensions.
+
+Help manages asynchronous data, treat events as a collections.
+An array whose items arrive asynchronously over time. 
+
+Angular uses RxJS.
+
+Methods on Observables that compose new Observables. observables process each value as it arrives.
+
+Different to Promises:
+Promise:
+  - single future value
+  - not lazy
+  - Not cancellable
+
+Observable:
+ - Emits multiple calues over time
+ - Lazy
+ - Cancellable
+
+Http Checklist: Setup
+- Add HttpClientModule to the imports array of the application's Angular Modules.
+- Build a service - define Dependency on  httpclient in constructor.
+
+- create method for each http request.
+
+use generics to specify returned type, with erro handling.
+
+In components use subscribe method of Observable.
+
+## Navigation and Routing Basics.
+
+We configure a route for each component.
+
+Deinfe options/Applications
+
+Tie a route to eahch option/action
+
+Activate view based on user action.
+
+Angular includes a RouterModule to configure app routes.
+
+Routes require a path and component. Router uses a first match first priority. Therefore order matters.
