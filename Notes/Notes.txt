@@ -247,3 +247,75 @@ Activate view based on user action.
 Angular includes a RouterModule to configure app routes.
 
 Routes require a path and component. Router uses a first match first priority. Therefore order matters.
+
+Checklist and summary?
+
+Should a component be nestable? Does it need a route?
+
+Configure Routes
+  - Define base element
+  - Add Rotuer Module
+  - Add Each Route
+  - order matters
+  - No Leading slash
+  - '' for default route
+  - '**' for wildcard
+  - component is link to component itself.
+
+Tying Routes to actions
+  - Add RouterLink directive as an attribute - clcikable elements
+  - enclose in square brackets
+  - use router outlet to identify where to display routed element.
+
+## Navigation and Routing Techniques
+
+You can use ':id' to specify an id paramter for example.
+
+To fetch the parameter from the route we use the parameter from the router.
+
+To route with code we use the Router service.
+
+## Protecting Routes with guards
+
+Router provides guards:
+  - CanActivate
+  - CanDeactivate
+  - Resolve
+  - CanLoad
+
+## Angular Modules
+
+It is possible to split an application into custom modules.
+
+What is an Angular Module?
+  - a class with an NgModule decorator
+  - It's purpose:
+    - Organise the pieces of the app
+    - Arrange into blocks
+    - extend from the application with capabilites
+    from external bodies
+    - provide a template resolution environment.
+    - Aggregate and re-export
+
+Every Component, directive and pipe must belong to one and only one Angular Module.
+
+All declared component, directives and pipes are private by default.
+
+Exports array allows us to share components directives or pipes. YOu can reexport
+3rd party modules.
+
+Never export a service. (normally belong in AppModule.).
+
+imports array allow us to use imported items and modules. only things the modules need.
+
+Importing a module does not provide access to iomported modules. (imports are not inherited.)
+
+Providers array = Allows service provides at a component or module level
+
+Consider building a CoreModule for services. Shouldn't import services.
+
+BrowserModule should only be iomported into top level App module.
+
+# Shared Modules
+
+Need common module. Need to ensure we export 
