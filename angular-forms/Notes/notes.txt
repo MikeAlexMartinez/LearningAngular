@@ -1,0 +1,34 @@
+### Angular Forms
+
+Building forms with Bootstrap styling
+Data binding forms
+Validating form input @ handling errors
+Posting a form to a server
+Third party form controls
+
+Introduction
+Form Basics
+Data Binding
+Validation
+Posting a Form
+3rd Party Controls
+
+Angular Form technologies
+
+Template-Driven Forms:
+- Use a components template
+- Unit test against the DOM
+
+Reactive Forms:
+Use a Component's Template
+Create a Form Model in Typescript (must be in sync with the template)
+Unit test against the form model.
+validation in the form model.
+
+Template-Driven Forms
+=====================
+
+Need to add directive to form to let angular know it's a form. 
+You also need to identify inputs by adding a name and ngModel to any inputs.
+
+Recommended to shut off browser validation by setting novalidate on the form.
