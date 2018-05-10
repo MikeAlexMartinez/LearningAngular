@@ -1,0 +1,227 @@
+### Angular CLI
+
+Angular CLI attemptes to make it easy to create an application that
+works and follows best practices.
+
+in this course:
+- Install and veriy the Angular CLI
+- Create a new application
+- Generate code from blueprints
+- Lint code
+- Build an optimized app
+- Test the application
+
+When apps are more consistent they become more maintainable.
+
+What makes it difficult to create a nw app.
+- start from a blank site
+- organising project structure
+- following style guide
+- creating an optimised build
+- Customizing according to team conventions
+- configuring unit and e2e testing
+
+When tooling handles process devs can focus on users needs.
+
+## What inside?
+
+install with NPM.
+
+Main commands:
+- ng generate - ng g
+- ng lint - ng l
+- ng build - ng b
+- ng serve - ng s
+- ng test
+- ng e2e - ng e
+- ng doc
+ e.g. ng doc component brings up documentation about components.
+- ng help
+ ng --help shows us 
+
+## Angular CLI Setup and Verification
+
+Needs Node 6.9 or higher
+
+You can verify your Angular CLI install with this command:
+$ npm list -g @angular/cli --depth=0
+
+This verifies the angular cli version.
+$ ng -v
+
+## Generating a new Angular Application
+
+ng new <name> --dry-run (don't write files, just report them)
+
+--skip-install creates all files but doesn't download from npm automatically.
+ng new <name> --skip-install
+
+ng new --help
+tells us all arguments
+
+You can specify a version to use with a flag e.g. --ng4
+
+--prefix 'myapp' will set selector prefixes to myapp
+
+--skip-tests don't create test files.
+
+--style change extension to scss.
+
+--routing generates a routing module.
+
+options to configure the CLI
+- ng new <some-flags>
+- edit cli config
+- ng set <property> <value>
+
+e.g. if you always want to use sass:
+ng set defaults.styleExt scss -g
+
+## linting
+
+ng lint - checks typescript code is good to go.
+
+ng lint --format stylish
+
+ng lint --help
+
+ng lint --fix
+
+## Generating Code from Blueprints
+
+A blueprint will generate code for us.
+
+We can customise names and styles.
+
+--dry-run can be used to not create files.
+
+e.g. ng g c customer
+
+generate a customer component
+
+--flat true  = should a folder be created?
+--inline-template or -it will the template be in the .ts file
+--inline-style or -is will the styles be in the .ts file
+--spec false will you generate a spec
+--view-encapsulation or -ve view encapsulation strategy
+--change-detection or -cd Change detection strategy
+--dry-run or -d
+
+By commiting code before using ng generate we can easily see any
+changes that have been made to the code.
+
+modules by default get their own default.
+modules don't get specs by default.
+
+## Generating Routing features
+
+When we generate a module with a --routing flag we generate a new module
+with a routing module created within the new module.
+
+e.g. ng g m sales --routing
+
+### Building with the Angular CLI
+
+Can compile to an output directory.
+
+Build targets determine the output.
+
+All builds use bundles / chunks
+
+Prod builds add uglification and tree-shaking
+
+ng build goes to /dist file by default.
+
+Eploring build bundles:
+- inline.bundle.js = Webpack Runtime
+- main.bundle.js = App Code
+- polyfills.bundle.js = polyfills
+- styles.bundle.js = Styles
+- vendor.bundle.js = Angular and other vendor files.
+
+Analyze sourcemap to draw a dependency map.
+
+You can use 'source-map-explorer' for this (npm install source-map-explorer --save-dev)
+then run source-map-explorer on the file to view dependencies.
+
+Comparing the Dev and Production Build Targets
+
+ng build                  or          ng build --prod
+environment.ts                        environment.prod.ts = Environment
+only images referenced in CSS         all build files = Cache-busting
+generated                             not generated = Source Maps
+Global CSS output to .js              yes, to css files = Extracted CSS
+no                                    yes = Uglification
+no                                    yes = Tree-shaking
+no                                    yes = AOT
+yes                                   yes = Bundling
+
+how to generate development builds:
+ng build --target=development --environment=dev
+ng build --dev -e=dev
+ng build --dev
+ng build
+
+ng build --target=production --environment=prod
+ng build --prod -e=prod
+ng build --prod
+
+Common build options
+-sm --sourcemap generate a source map
+--aot Ahead of time compilation.
+--watch -w watch and rebuild
+
+you can use source-map-explorer to investigate file / bundle sizes.
+to use source map explorer you need to generate a source-map with the -sm command.
+
+## ng serve
+
+compiled output is served from memory. (makes it fast for development builds).
+
+common options:
+-o --open opens default browser
+-p --port port ot use when serving
+-lr --live-reload
+--ssl
+-pc --proxy-config proxy config file.
+
+## ejecting
+
+outputs files and project to allow you to change build configurations.
+
+## Styles and other
+
+We can add other files and scripts to the build configuration in the 'angular.json' file.
+
+## Testing
+- Execute unit tests
+- Watch for file changes
+- Execute end to end tests
+- Explore various options.
+
+unit tests are configured to run against all *.spec.ts files.
+
+watch for file changes, then test again.
+run in own terminal process
+
+common ng test options:
+--code-coverage -cc default: false
+--color default: true
+--single-run -sr default false
+--progress default: true
+--sourcemaps -sm default: true
+--watch -w default: true
+
+coverage goes to the ./coverage folder, this can be changed in the configs.
+
+## End to End options
+
+Testing the app in the same way as a user would.
+
+Common e2e options:
+--config -c point to a config file
+--element-explorer -ee Opens protractors element explorer
+--serve -s Compile and serve on random port
+--specs Overide specs to test
+--webdriver-update -wu try to update webdriver (default true)
+

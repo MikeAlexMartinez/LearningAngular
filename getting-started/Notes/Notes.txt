@@ -318,4 +318,54 @@ BrowserModule should only be iomported into top level App module.
 
 # Shared Modules
 
-Need common module. Need to ensure we export 
+Need common module. Need to ensure we export.
+
+## Angular Module Checklist
+
+Every application must have a root app (does bootstrapping).
+
+Define feature modules for specific feature areas.
+
+Create a shared module for shared or reusable pieces.
+
+Use a Core module for services only import once into root module.
+
+Separate Routes into routes module.
+
+NgModule metadata includes:
+  Bootstrap: Startup component.
+  Declarations: What belongs to this module.
+  Exports: What an importing module can use.
+  Imports: Lists supporting modules.
+  Prodives: Service Providers.
+
+## Angular CLI
+
+Building, Testing and Deploying with the CLI
+
+use --help to discover more about various commands.
+
+ng serve launches a dev server.
+It launches in watch mode to capture various changes.
+- o  opens browser when you run it.
+
+ng generate allows us to generate components and services etc with
+scaffolding and various files updated automatically.
+
+ng generate can build the following:
+  - class       - ng g cl
+  - component   - ng g c
+  - directive   - ng g d
+  - enum        - ng g e
+  - guard       - ng g g
+  - interface   - ng g i
+  - module      - ng g m
+  - pipe        - ng g p
+  - service     - ng g s
+
+ng test and ng e2e runs the various test suites.
+
+Things we want to achieve when we build our code for production.
+- minify / uglify
+- Tree shaking
+- pre-compile bundles - AOT: Ahead of Time
