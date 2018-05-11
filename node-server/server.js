@@ -11,6 +11,24 @@ const server = http.createServer(function (req, res) {
     return;
   }
 
+  if (req.method.toLowerCase() === 'get') {
+    var data = {
+      data: {
+        languages: [
+          'English',
+          'Spanish',
+          'German',
+          'Other',
+        ]
+      }
+    };
+
+    const responseData = JSON.stringify(data);
+    res.end(responseData);
+    console.log("get: ", responseData);
+    return;
+  }
+
   res.end();
 });
 

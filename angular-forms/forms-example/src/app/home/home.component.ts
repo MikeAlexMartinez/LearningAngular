@@ -39,6 +39,7 @@ export class HomeComponent implements OnInit {
       .subscribe(
         data => console.log('success: ', data),
         err => console.log('error: ', err),
+        () => console.log('post completed')
       );
   }
 

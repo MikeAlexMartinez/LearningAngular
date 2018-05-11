@@ -1,12 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient,
-  HttpResponse,
-  HttpHeaderResponse,
   HttpHeaders } from '@angular/common/http';
 import { Employee } from '../models/employee.model';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-
+import { Observable, throwError } from 'rxjs';
+import { map, catchError, retry } from 'rxjs/operators';
 
 @Injectable()
 export class FormPoster {
@@ -14,14 +11,15 @@ export class FormPoster {
   constructor (private _http: HttpClient) { 
   }
 
-  private extractData(res: HttpResponse<any>) {
-    let body = JSON.parse(res.body);
-    return body.fields || { };
+  private extractData(res) {
+    console.log('map called');
+    let data = res.fields || {};
+    return data;
   }
 
-  private handleError(error: any) {
-    console.error('post error: ', error);
-    return Observable.throw(error.statusText);
+  private handleError(error, observer) {
+    console.error('Error!: ' + error.message);
+    return throwError('oops, we encountered an error');
   }
 
   postEmployeeForm(employee: Employee) {
@@ -33,11 +31,10 @@ export class FormPoster {
       })
     }
 
-
     return this._http.post<any>('http://localhost:3100/postemployee', body, httpOptions)
-      .pipe(map(res => {
-        console.log(res);
-        return res;
-      }));
+      .pipe(
+        map(this.extractData),
+        catchError(this.handleError)
+      );
   }
 }
