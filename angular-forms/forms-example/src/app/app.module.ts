@@ -7,6 +7,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 
+import { FormPoster } from './services/form-poster.service'; 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,7 +20,7 @@ import { HomeComponent } from './home/home.component';
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [FormPoster],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

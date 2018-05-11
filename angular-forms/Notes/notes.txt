@@ -32,3 +32,33 @@ Need to add directive to form to let angular know it's a form.
 You also need to identify inputs by adding a name and ngModel to any inputs.
 
 Recommended to shut off browser validation by setting novalidate on the form.
+
+Data binding and ngModel.
+
+ngModel tells angular to track the field.
+
+<!-- No binding -->
+<input name="firstname" ngModel>
+
+<!-- One way binding --> This matches to firstName in the component
+<input name="firstname" [ngModel]="firstName">
+
+<!-- two way binding -->
+// more useful to apply a function to a model change
+<input name="firstname" [ngModel]="firstName" (ngModelChange)="firstName=$event">
+or more concise (no function used) 
+<input name="firstname" [(ngModel)]="firstName">
+
+
+## Validation Classes in Angular (2)
+
+All fields are marked as ng-untouched
+once focused becomes touched
+
+ng-pristine => not changed
+ng-dirty => field changed
+
+ng-valid => field is valid
+ng-invalid => field is not valid
+
+model properties are those found above without the 'ng-'

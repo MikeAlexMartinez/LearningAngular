@@ -1,17 +1,106 @@
 <div class="container">
   <h3>Employee Form</h3>
-  <form #form="ngForm" novalidate>
+  <form #form="ngForm" (submit)="submitForm(form)" novalidate>
     <div class="form-group">
-      <label>First Name</label>
-      <input type="text" required placeholder="First name" name="firstName" ngModel>
+      <label class="control-label">First Name</label>
+      <input type="text"
+        #firstName="ngModel"
+        class="form-control"
+        required
+        pattern="...+"
+        placeholder="First name" 
+        name="firstName"
+        autocomplete="given-name"
+        [ngModel]="model.firstName"
+        (ngModelChange)="firstNameToUpperCase($event)"
+        [class.is-invalid]="firstName.invalid && firstName.touched"
+      >
+      <div *ngIf="firstName.invalid && firstName.touched" class="invalid-feedback">
+        First name is required, and must be three or more characters.
+      </div>
     </div>
+
     <div class="form-group">
       <label>Last Name</label>
-      <input type="text" required placeholder="Last name" name="lastName" ngModel>
+      <input 
+        type="text" 
+        class="form-control"
+        required
+        pattern=".+"
+        placeholder="Last name" 
+        name="lastName"
+        autocomplete="family-name"
+        #lastName="ngModel"
+        [(ngModel)]="model.lastName"
+        [class.is-invalid]="lastName.invalid && lastName.touched"
+      >
+      <div *ngIf="lastName.invalid && lastName.touched" class="invalid-feedback">
+          Last name is required, and must be one or more characters.
+        </div>
     </div>
 
-    <button class="btn btn-primary" type="submit">OK</button>
+    <div class="checkbox">
+      <label>
+        <input
+          type="checkbox"
+          name="isFulltime"
+          [(ngModel)]="model.isFulltime"
+        /> Full Time Employee
+      </label>
+    </div>
+
+    <label>Payment Type</label>
+    <div class="radio">
+      <label>
+        <input 
+          type="radio"
+          name="paymentType"
+          value="w2"
+          checked
+          [(ngModel)]="model.paymentType"
+        > W2
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input 
+          type="radio"
+          name="paymentType"
+          value="1099"
+          [(ngModel)]="model.paymentType"
+        > 1099
+      </label>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label">Primary Language</label>
+      <select
+        class="form-control"
+        name="primaryLanguage"
+        #primaryLanguage
+        [class.is-invalid]="hasPrimaryLanguageError"
+        (blur)="validatePrimaryLanguage(primaryLanguage.value)"
+        (change)="validatePrimaryLanguage(primaryLanguage.value)"
+        [(ngModel)]="model.primaryLanguage"
+      >
+        <option value="default">Select a Language...</option>
+        <option *ngFor="let lang of languages">{{ lang }}</option>
+      </select>
+      <div *ngIf="hasPrimaryLanguageError" class="invalid-feedback">
+        Please select a primary language
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Date Hired</label>
+      <input type="date" class="form-control">
+    </div>
+
+    <button 
+      class="btn btn-primary"
+      type="submit"
+      [disabled]="form.invalid"
+    >OK</button>
+    <h3>{{ form.pristine }}</h3>
   </form>
 </div>
-
-{{ form.pristine }}
