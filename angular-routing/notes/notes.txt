@@ -1,0 +1,159 @@
+### Angular Routing
+
+for issues check http://blogs.msmvps.com/deborahk/angular-routing-problem-solver/
+
+Topics:
+- Routing Basics
+- Routing to features
+- Route Parameters
+- Prefetching Data using Route Resolvers
+- Child routes
+- Grouping and Component-less routes
+- styling, animating and watching routes
+- Secondary (auxillary) routes
+- Route Guards
+- Lazy Loading
+
+## Sample app architecture
+
+key
+=p> primary routes
+=c> child routes
+=s> secondary routes
+
+Main => app =p> Welcome
+            =p> Login
+            =p> Product List =p> Product Detail =p> Product Edit =c> Edit Info
+                                                                 =c> Edit Tags
+                             =p> Product Edit =c> Edit Info
+                                              =c> Edit Tags
+            =p> Product Edit =c> Edit Info
+                             =c> Edit Tags
+            =s> Message
+
+Angular Modules
+
+BrowserModule
+RouterModule
+HttpModule
+    ^
+App Module  ===  Product Module  ===  User Module ===  Message module  ===  Shared Module
+    ^                   ^                 ^                 ^
+ App Comp         Product List         Login Comp     Message Component
+ Welcome C        Product Detail
+Page n/found      Product Edit
+
+## How
+
+- Url is changed
+- router checks paths for first match
+- process redirect if exists
+- process route guards
+- resolve data
+- activate component(s)
+- Display template(s)
+
+## Routing Basics
+
+a base href if required in the index.html of the application.
+
+RouterModule comes with two methods.
+
+RouterModule.forRoot() & .forChild()
+
+forRoot()
+
+delcares router directives
+manages route configuration
+registers the router service
+used once.
+
+declares directives,
+manages route config.
+does not register service.
+Used in feature modules.
+
+redirects are local and only happen once.
+
+routerLink directive needs to be added to template to activate routes.
+
+Browser url styles.
+
+HTML5 style and hash based object.
+
+web apis allow access to history urls to control text in address.
+Can prevent browser reload.
+
+# based leverages url fragements and prevents a reload.
+
+HMTML5 is a It's a more
+
+{useHash: true} in router config activates hash-style urls.
+
+checklist:
+Setting up
+- base path
+- add router module and use .forRoot() in app module.
+- use forChild for feature routes.
+
+configuring routes
+- path: url segment for route
+- no leading slash
+- empty for default
+- ** fro wildcard
+- normally include a component.
+- component must be imported.
+
+Order MAtters!
+
+router-outlet directive tells you where to place component.
+
+routerLink directive is an attribute for a clicable element.
+- enclose in square brackets.
+- bind to a link paramters array, first element id the root url segment.
+
+## Routing to Features
+
+An angular feature module is an angular module created with the express
+purpose of organising the components for a specific application 
+feature area.
+
+Setting up feature routing
+- import router
+- configure routes
+- activate routes
+
+naming strategies
+- using common route path names expresses a relationship between features.
+
+Module routes are imported above those imported directly. 
+
+## Routing with Code
+
+Uses the Router Service in @angular/router
+
+define dependency in constructor.
+
+then you can define method to handle routing with code.
+
+When a string syntax is used [] brackets can be left off.
+
+navigateByUrl() method clears any additional routes. (entire set is replaced)
+navigate() retains the secondary route information.
+
+## Route Parameters
+
+placeholders must first be defined.
+
+router parameters need to be unique.
+
+array for route can be build up with separate entries.
+
+the ActivatedRoute service provides a component with access to route paramters.
+
+You can either use a snapshot method with a property matching the required name,
+or you can use an observable so that the template updates when required.
+
+## Prefetching Data using Route Resolvers
+
+## Child Routes
