@@ -3,7 +3,7 @@ import { HttpClient,
   HttpHeaders } from '@angular/common/http';
 import { Employee } from '../models/employee.model';
 import { Observable, throwError } from 'rxjs';
-import { map, catchError, retry } from 'rxjs/operators';
+import { map, catchError, retry, delay } from 'rxjs/operators';
 
 @Injectable()
 export class FormPoster {
@@ -31,6 +31,7 @@ export class FormPoster {
   getLanguages(): Observable<any> {
     return this._http.get('http://localhost:3100/get-languages')
       .pipe(
+        delay(0),
         map(this.extractLanguages),
         catchError(this.handleError)
       );

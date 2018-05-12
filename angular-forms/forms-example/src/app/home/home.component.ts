@@ -11,12 +11,23 @@ import { FormPoster } from '../services/form-poster.service';
 })
 export class HomeComponent implements OnInit {
 
-  languages: string[];
-
-  model = new Employee('', '', true, 'w2', 'default');
+  languages: string[] = [];
+  model: Employee;
+  fulltime: string;
+  fullTimeActive: boolean;
   hasPrimaryLanguageError: boolean;
   
-  constructor(private formPoster: FormPoster) { }
+  constructor(private formPoster: FormPoster) { 
+    this.model = new Employee('', '', true, 'w2', 'default', new Date(), new Date(), 5)
+    this.fulltime = this.model.isFulltime ? 'Full Time' : 'Part Time';
+    this.fullTimeActive = this.model.isFulltime;
+  }
+
+  processFullTime(isft: boolean): void {
+    this.model.isFulltime = isft;
+    this.fulltime = this.model.isFulltime ? 'Full Time' : 'Part Time';
+    this.fullTimeActive = isft;
+  }
 
   firstNameToUpperCase(name: string): void {
     if (name.length > 0) {

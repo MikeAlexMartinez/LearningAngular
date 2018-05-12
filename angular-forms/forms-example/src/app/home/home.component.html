@@ -1,4 +1,7 @@
-<div class="container">
+<div class="container" style="text-align: center" *ngIf="languages.length === 0">
+  <h3>Loading...</h3>
+</div>
+<div class="container" *ngIf="languages.length > 0">
   <h3>Employee Form</h3>
   <form #form="ngForm" (submit)="submitForm(form)" novalidate>
     <div class="form-group">
@@ -39,37 +42,26 @@
         </div>
     </div>
 
-    <div class="checkbox">
-      <label>
-        <input
-          type="checkbox"
-          name="isFulltime"
-          [(ngModel)]="model.isFulltime"
-        /> Full Time Employee
-      </label>
+    <div class="form-group">
+      <button
+        type="button"
+        class="btn"
+        name="isFulltime"
+        #isFullTime
+        [ngModel]="model.isFulltime"
+        (ngModelChange)="processFullTime($event)"
+        [class.btn-primary]="fullTimeActive"
+        btnCheckbox
+      > {{ fulltime }}
+      </button>
     </div>
 
     <label>Payment Type</label>
-    <div class="radio">
-      <label>
-        <input 
-          type="radio"
-          name="paymentType"
-          value="w2"
-          checked
-          [(ngModel)]="model.paymentType"
-        > W2
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input 
-          type="radio"
-          name="paymentType"
-          value="1099"
-          [(ngModel)]="model.paymentType"
-        > 1099
-      </label>
+    <div class="btn-group" style="display: block">
+      <label class="btn btn-primary" name="model.paymentType" [(ngModel)]="model.paymentType"
+        btnRadio="w2" tabindex="0" role="button">w2</label>
+      <label class="btn btn-primary" name="model.paymentType" [(ngModel)]="model.paymentType"
+        btnRadio="1099" tabindex="0" role="button">1099</label>
     </div>
 
     <div class="form-group">
@@ -93,7 +85,40 @@
 
     <div class="form-group">
       <label>Date Hired</label>
-      <input type="date" class="form-control">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Datepicker"
+        [bsConfig]="{ 
+          dateInputFormat: 'DD-MM-YYYY',
+          containerClass: 'theme-red',
+          showWeekNumbers: false
+        }"
+        bsDatepicker
+        name="startDate"
+        #startDate="ngModel"
+        [(ngModel)]="model.startDate"
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Work Start Time</label>
+      <timepicker
+        class="form-control"
+        #startTime="ngModel"
+        name="startTime"
+        [(ngModel)]="model.startTime"
+      ></timepicker>
+    </div>
+
+    <div class="form-group">
+      <rating
+        name="rating"
+        [max]="10"
+        [(ngModel)]="model.rating"
+        [customTemplate]="t" style="color: #0275d8; font-size: 20px;">
+      </rating>
+      <ng-template #t let-index="index" let-value="value">{{index < value ? '&#9745;' : '&#9744;'}}</ng-template>
     </div>
 
     <button 

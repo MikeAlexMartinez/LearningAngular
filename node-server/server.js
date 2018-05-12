@@ -5,6 +5,9 @@ const util = require('util');
 const server = http.createServer(function (req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+  res.writeHead(200, {
+    'content-type': 'application/json'
+  });
 
   if (req.method.toLowerCase() === 'post') {
     processform(req, res);
@@ -23,7 +26,7 @@ const server = http.createServer(function (req, res) {
       }
     };
 
-    const responseData = JSON.stringify(data);7
+    const responseData = JSON.stringify(data);
     res.end(responseData);
     console.log("get: ", responseData);
     return;
@@ -36,9 +39,6 @@ function processform(req, res) {
   var form = new formidable.IncomingForm();
 
   form.parse(req, function(err, fields) {
-    res.writeHead(200, {
-      'content-type': 'application/json'
-    });
 
     var data = JSON.stringify({
       fields: fields

@@ -7,7 +7,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 
-import { FormPoster } from './services/form-poster.service'; 
+import { FormPoster } from './services/form-poster.service';
+import { BsDatepickerModule, TimepickerModule, ButtonsModule,
+  RatingModule } from 'ngx-bootstrap';
 
 @NgModule({
   declarations: [
@@ -15,6 +17,10 @@ import { FormPoster } from './services/form-poster.service';
     HomeComponent
   ],
   imports: [
+    RatingModule.forRoot(),
+    BsDatepickerModule.forRoot(),
+    TimepickerModule.forRoot(),
+    ButtonsModule.forRoot(),
     BrowserModule,
     AppRoutingModule,
     FormsModule,
