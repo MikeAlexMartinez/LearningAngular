@@ -11,11 +11,7 @@ import { FormPoster } from '../services/form-poster.service';
 })
 export class HomeComponent implements OnInit {
 
-  languages: string[] = [
-    'English',
-    'Spanish',
-    'Italian'
-  ];
+  languages: string[];
 
   model = new Employee('', '', true, 'w2', 'default');
   hasPrimaryLanguageError: boolean;
@@ -52,6 +48,10 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.formPoster.getLanguages()
+      .subscribe(
+        languages => this.languages = languages,
+        err => console.log(err.message)
+      );
   }
-
 }

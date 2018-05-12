@@ -23,7 +23,7 @@ const server = http.createServer(function (req, res) {
       }
     };
 
-    const responseData = JSON.stringify(data);
+    const responseData = JSON.stringify(data);7
     res.end(responseData);
     console.log("get: ", responseData);
     return;

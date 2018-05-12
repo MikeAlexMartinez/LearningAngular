@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { HttpClient,
   HttpHeaders } from '@angular/common/http';
 import { Employee } from '../models/employee.model';
@@ -12,7 +12,7 @@ export class FormPoster {
   }
 
   private extractData(res) {
-    console.log('map called');
+    console.log('extracting form post response...');
     let data = res.fields || {};
     return data;
   }
@@ -20,6 +20,20 @@ export class FormPoster {
   private handleError(error, observer) {
     console.error('Error!: ' + error.message);
     return throwError('oops, we encountered an error');
+  }
+
+  private extractLanguages(res) {
+    console.log('extracting languages...');
+    let languages = res.data.languages || [];
+    return languages;
+  }
+
+  getLanguages(): Observable<any> {
+    return this._http.get('http://localhost:3100/get-languages')
+      .pipe(
+        map(this.extractLanguages),
+        catchError(this.handleError)
+      );
   }
 
   postEmployeeForm(employee: Employee) {
