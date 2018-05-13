@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from '../messages/message.service';
 
 import { IProduct } from './product';
@@ -17,11 +17,16 @@ export class ProductEditComponent implements OnInit {
 
     constructor(private productService: ProductService,
                 private messageService: MessageService,
-                private route: ActivatedRoute) { }
-
+                private route: ActivatedRoute,
+                private router: Router
+    ) { }
+    
     ngOnInit() {
-        let id = +this.route.snapshot.params['id'];
-        this.getProduct(id);
+        // need to use this to watch for parameter changes without 
+        // component reinitialising
+        this.route.params.subscribe(
+            params => this.getProduct(+params['id'])
+        );
     }
 
     getProduct(id: number): void {
