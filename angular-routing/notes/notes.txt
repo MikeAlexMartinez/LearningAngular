@@ -154,6 +154,31 @@ the ActivatedRoute service provides a component with access to route paramters.
 You can either use a snapshot method with a property matching the required name,
 or you can use an observable so that the template updates when required.
 
+When a url only changes parameters, components aren't reinitialised, so any routes,
+that only alter parameters, don't rerender fully and so it is recommended to use
+observables to control fetching data within the init method.
+
+In ng v4 route parameters can be accessed with .snapshot.paramMap.get() or getAll for multiple parameters.
+
+e.g. 
+
+import { ActivatedRoute } from '@angular/route';
+
+import 
+
+optional paramters are useful for additional routing information without affecting routing 
+configuration. optional paramters are separated by semi-colons after the main route.
+
+query parameters can be retained across route paths. They are not part of the routing config.
+query params are passed separately to the route. they use the [queryParams] directive.
+In code we add an object as a second argument to the navigate method which specifies 
+named queryParams with the object.
+
+To retain query params across components and rerender we can utilise the [preserveQueryParams] directive
+and set its value to "true".
+
+[preserveQueryParams] was deprecated in v2 and replaced in v4+ with [queryParamsHandling]="preserve"
+
 ## Prefetching Data using Route Resolvers
 
 ## Child Routes

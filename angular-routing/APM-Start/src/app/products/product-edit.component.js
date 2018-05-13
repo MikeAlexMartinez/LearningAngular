@@ -68,6 +68,7 @@ var ProductEditComponent = (function () {
             this.messageService.addMessage(message);
         }
         // Navigate back to the product list
+        this.router.navigate(['/products'], { queryParamsHandling: "preserve" });
     };
     return ProductEditComponent;
 }());

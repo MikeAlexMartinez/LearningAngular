@@ -80,5 +80,6 @@ export class ProductEditComponent implements OnInit {
         }
 
         // Navigate back to the product list
+        this.router.navigate(['/products'], { queryParamsHandling: "preserve" });
     }
 }
