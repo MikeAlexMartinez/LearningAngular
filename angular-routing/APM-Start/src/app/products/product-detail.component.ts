@@ -12,18 +12,12 @@ export class ProductDetailComponent implements OnInit {
     product: IProduct;
     errorMessage: string;
 
-    constructor(private productService: ProductService,
-                private route: ActivatedRoute) { }
+    constructor(
+        private route: ActivatedRoute
+    ) { }
 
     ngOnInit() {
-        // convert to number
-        let id = +this.route.snapshot.params['id'];
-        this.getProduct(id);
-    }
-
-    getProduct(id: number) {
-        this.productService.getProduct(id).subscribe(
-            product => this.product = product,
-            error => this.errorMessage = <any>error);
+        // use data from route resolver prefetch
+        this.product = this.route.snapshot.data['product'];
     }
 }

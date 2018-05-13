@@ -4,6 +4,7 @@ import { MessageService } from '../messages/message.service';
 
 import { IProduct } from './product';
 import { ProductService } from './product.service';
+import { Z_SYNC_FLUSH } from 'zlib';
 
 @Component({
     templateUrl: './app/products/product-edit.component.html',
@@ -22,19 +23,9 @@ export class ProductEditComponent implements OnInit {
     ) { }
     
     ngOnInit() {
-        // need to use this to watch for parameter changes without 
-        // component reinitialising
-        this.route.params.subscribe(
-            params => this.getProduct(+params['id'])
-        );
-    }
-
-    getProduct(id: number): void {
-        this.productService.getProduct(id)
-            .subscribe(
-                (product: IProduct) => this.onProductRetrieved(product),
-                (error: any) => this.errorMessage = <any>error
-            );
+        this.route.data.subscribe(data => {
+            this.onProductRetrieved(data['product']);
+        });
     }
 
     onProductRetrieved(product: IProduct): void {

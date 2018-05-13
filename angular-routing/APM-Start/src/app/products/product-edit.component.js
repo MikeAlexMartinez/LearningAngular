@@ -22,14 +22,9 @@ var ProductEditComponent = (function () {
     }
     ProductEditComponent.prototype.ngOnInit = function () {
         var _this = this;
-        // need to use this to watch for parameter changes without 
-        // component reinitialising
-        this.route.params.subscribe(function (params) { return _this.getProduct(+params['id']); });
-    };
-    ProductEditComponent.prototype.getProduct = function (id) {
-        var _this = this;
-        this.productService.getProduct(id)
-            .subscribe(function (product) { return _this.onProductRetrieved(product); }, function (error) { return _this.errorMessage = error; });
+        this.route.data.subscribe(function (data) {
+            _this.onProductRetrieved(data['product']);
+        });
     };
     ProductEditComponent.prototype.onProductRetrieved = function (product) {
         this.product = product;

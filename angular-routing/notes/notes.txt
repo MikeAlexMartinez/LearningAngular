@@ -181,4 +181,39 @@ and set its value to "true".
 
 ## Prefetching Data using Route Resolvers
 
+We can retrieve data before routing to a component. (If we think a person is likely to navigate there).
+
+Route's have a Data Property that we can pass to a route.
+
+A route resolver can fetch data first before naviagating to a route.
+
+Angular services can also be used to share data.
+
+Route's have a data property that 
+
+Three steps:
+- Build a route resolver
+- add resolve property to the route configuration
+- read the data from ActivatedRoute
+
+Use snapshot if data won't change within same page,
+Use observable if data can change within same page (i.e. no component rerender)
+
+To create a Resolver we must implement the Resolve interface from the @angular/route.Resolve module.
+
+route.data is used for obserables rather than route.snapshot which returns data.
+
 ## Child Routes
+
+Child routes provide an easy way to organise your applications components in a logical way.
+
+Child routes allow you to display routed templates into other routed templates. e.g. templates.
+
+Allow for:
+- tabbed pages,
+- master / detail pages
+- embed templates
+- encapsulate features
+- required for lazy loading.
+
+child routes are defined within teh children property of the parents route.
