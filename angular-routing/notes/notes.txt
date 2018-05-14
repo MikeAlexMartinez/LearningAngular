@@ -370,3 +370,25 @@ Requirements:
 - Lazy loaded module must be a feature module.
 - must be grouped under a single parent.
 - can't be imported in another module.
+
+we use the loadChildren property within the routing definition on the upper level component routing module.
+
+canLoad() works before loading an asynchronous route.
+
+better for security reasons as source code isn't loaded until authorised and necessary.
+
+PreLoading (eager lazy loading) feature modules:
+    - preloads approved modules so after initial load.
+
+Three pre-loading strategies:
+- No preloading (default)
+- preload all (canLoad blocks preloading, with canActivate etc modules are preloaded, but not usable until guard conditions are met.)
+- custom (we define it)
+
+To define a strategy we pass a 'preLoadingStrategy' to the RouterModule as a second argument.
+
+Custom strategies:
+We define a preloading service using the PreloadingStrategy interface (preload(route: <Route>, load: <Function>): Observable<any> ).
+
+We then must add service to provider in app-routing module, and then define this service as the value of the preLoadingStrategy
+property in the router module configuration options argument.

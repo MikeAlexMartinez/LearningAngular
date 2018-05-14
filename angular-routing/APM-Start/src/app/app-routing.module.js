@@ -9,8 +9,16 @@ var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var welcome_component_1 = require("./home/welcome.component");
 var page_not_found_component_1 = require("./page-not-found.component");
+var auth_guard_service_1 = require("./user/auth-guard.service");
+var selective_strategy_service_1 = require("./selective-strategy.service");
 var routes = [
     { path: 'welcome', component: welcome_component_1.WelcomeComponent },
+    {
+        path: 'products',
+        loadChildren: 'app/products/product.module#ProductModule',
+        data: { preload: false },
+        canActivate: [auth_guard_service_1.AuthGuard]
+    },
     { path: '', redirectTo: 'welcome', pathMatch: 'full' },
     { path: '**', component: page_not_found_component_1.PageNotFoundComponent }
 ];
@@ -22,8 +30,12 @@ var AppRoutingModule = (function () {
 AppRoutingModule = __decorate([
     core_1.NgModule({
         imports: [
-            router_1.RouterModule.forRoot(routes /*, {enableTracing: true}*/)
+            router_1.RouterModule.forRoot(routes, {
+                enableTracing: false,
+                preloadingStrategy: selective_strategy_service_1.SelectiveStrategy
+            })
         ],
+        providers: [auth_guard_service_1.AuthGuard, selective_strategy_service_1.SelectiveStrategy],
         exports: [router_1.RouterModule],
         declarations: [
             welcome_component_1.WelcomeComponent,
