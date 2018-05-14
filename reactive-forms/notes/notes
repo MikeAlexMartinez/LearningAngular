@@ -1,0 +1,194 @@
+### Reactive-Forms
+
+for issues: https://blogs.msmvps.com/deborahk/angular-2-reactive-forms-problem-solver/
+
+## Template-driven vs. Reactive forms
+
+template : easy to use,
+  similar to angular 1
+  two way binding
+  auto tracking of form and state.
+
+Reactive: (require more code)
+  more flexible
+  immutable data model
+  easier to perform action on a value change
+  reactive transformations
+  Debounce etc
+  easily add input elements to a form
+  easier unit testing
+
+## Reactive form techniques
+
+Form building blocks:
+State = pristine / dirty - if a form is pristine nothing has been changed.
+Validity = valid / errors - valid if all input forms are valid. 
+Visited = touched / untouched
+
+FormControl - tracks input.
+FormGroup - tracks group of inputs.
+
+a FormModel retains form state, retains entries, retains form controls and nested formgroups. the data model
+is different to the formmodel and is in the class. They can be bound.
+
+Template forms:
+template = 
+  Form elements
+  Input elements
+  DataBinding
+  Validation Rules
+  Validation Error Messages
+  Form model auto generated
+
+Component =
+  properties for data binding (data model).
+  methods for form operations, such as submit
+
+Reactive Forms:
+  Shift responsibility to the component class.
+  component =
+  - Form Model, 
+  - define validation rules,
+  - validation error Messages
+  - manage binding- methods for operations.
+
+  template =
+  - form elements
+  - input elements
+  - bind to form model
+
+# Template Driven Directives
+  FormsModule = ngForm, ngModel, ngModelGroup
+
+  <form (ngSubmit)="save()" #signupForm="ngForm"></form> Links to FormGroup
+  #templateReference (#signupForm in this case) is used whenever we want to access the template variable.
+  [(ngModel)]"customer.firstName" = links to the FormControl and FormGroup. 
+
+  #templateReferences are assigned to the "ngModel" FormControl
+  reactive form requires name attribute
+
+  template driven forms minimise class code but enlarges form code
+  significantly.
+
+# Reactive Forms Directives
+formGroup, formControl, formControlName, formGroupName, formArrayName from ReactiveFormsModule
+
+form model built in class, (fromGroup and ngSubmit formControlName is used)
+[ngClass] accesses properties on the class to determine styling.
+
+The dev tools are very useful for template driven froms.
+
+Complex Situations suited for reactive forms:
+  Dynamically add input elements,
+  Watch what the user types,
+  Wait for validation until the typing stops,
+  Different validation for different Situations,
+  Immutable data structures.
+
+## Building a Simple Reactive Form
+
+Every From model requires:
+- at least one FormGroup - the root form
+- at least one FormControl - for each input element
+- nested FormGroups as desired
+- FormArrays
+
+in the component,
+Import FormGroup for the form model. 
+We define data model.
+
+use ngOnInit to initialise FormGroup.
+
+In FormGroup, add a new FormControl for each
+necessary value.
+
+we bind the FormGroup and formControl to bind to the formGroup
+in the class, and formControlName to match to FormControls too.
+
+In a reactive from you can either reference FormModel properties
+using the following syntaxes:
+
+<formGroupName>.controls.<formControlName>.valid
+/ or
+<formGroupName>.get(<formControlName>).valid
+
+or if you define properties on the class instance directly and then
+add these to the formGroup using the this keyword, you can use the
+names directly in the template.
+
+e.g.
+in class:
+firstName = new FormControl();
+
+ngOnInit(): void {
+  this.customerForm = new FormGroup({
+    firstName: this.firstName,
+    ...
+  });
+}
+
+in template: 
+firstName.valid
+
+using setValue and patchValue
+
+require entries for entire form.
+customerForm.setValue() sets values of entire form.
+
+customerForm.patchValue() sets subset of values in the form.
+
+## FormBuilder is a class. It's a factory that creates a FormGroup
+and FormControls. shortens boilerplate code and is a service.
+
+
+## Validation the reactive way
+
+possibilities:
+- Setting Built-in Validation Rules,
+- Adjusting Validation Rules at Runtime
+- Custom Validators
+- Custom Validators with Parameters
+- Cross-field Validation
+
+e.g. built in
+Validators.rquried
+Validators.minLength(3)
+
+firstName: ['value', [Validators.required, Validators.minLength(3)], asyncValidator]
+
+To change validators at runtime we can use the
+myControl.setValidators() method which
+  takes a Validator or an array of Validators.
+
+myControl.clearValidators(); removes validators
+
+myControl.updateValueAndValidity(); updates form status
+
+
+Defiing a custom validator
+
+is a function that takes in an AbstractControl.
+
+it returns an object defining the broken rule or null if
+if passes.
+myvalidator is true is there is an error.
+
+Normal custom validators only take one parameter but by creating a higher
+level (factory) function we can pass a number of parameters to the function.
+
+e.g.
+function myCustomValidator(param: any): ValidatorFn {
+  return (c: AbstractControl): {[key: string]: boolean} | null => {
+    if ( ...somethingIsWrong... ) {
+      return { 'myvalidator': true };
+    }
+    return null;
+  }
+}
+
+To create groups of components that are validated together we need to utilise 
+nested formGroups, and then we can define the validator on the group.
+
+
+
+## CRUD
