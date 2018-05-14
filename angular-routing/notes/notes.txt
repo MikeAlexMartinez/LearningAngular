@@ -216,10 +216,17 @@ Allow for:
 - encapsulate features
 - required for lazy loading.
 
-child routes are defined within teh children property of the parents route.
+child routes are defined within the children property of the parents route.
 
 To load data for a child route you can use a product data service or a child route resolver, or where data is Shared
 across tabs you can use a route resolver in the parent.
 
-When using a link frmo parent to child we want to use
+When using a link from parent to child we want to use
 the ViewChild (from @ng/core) decorator.
+
+Child paths only extend the parent route.
+
+Access data using the activated routes snapshot or the activated routes data observable.
+
+## Grouping and Component-less Routes
+

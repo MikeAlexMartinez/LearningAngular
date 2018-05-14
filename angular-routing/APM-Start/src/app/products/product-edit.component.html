@@ -24,7 +24,7 @@
                     <button
                         class="btn"
                         [class.btn-primary]="isValid()"
-                        disabled="!isValid('')"
+                        [disabled]="!isValid()"
                         type="button"
                         style="width: 80px; margin-right: 10px"
                         (click)="saveProduct()">
@@ -43,7 +43,7 @@
                     <a
                         class="btn btn-default"
                         (click)="deleteProduct()">
-                        Save
+                        Delete
                     </a>
                 </span>
             </div>
