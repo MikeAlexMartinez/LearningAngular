@@ -230,3 +230,43 @@ Access data using the activated routes snapshot or the activated routes data obs
 
 ## Grouping and Component-less Routes
 
+Grouping allows for better organisation
+allows for sharing of guards and Resolvers.
+and also allows for lazy loading.
+
+Grouping Routes:
+- make routes children of initial product route.
+- remove component and embed in child with default '' route.
+
+## Styling, Animating, and Watching routes
+
+You can style an active route using the routerLinkActive directive the router will
+add the named class when active and remove it when inactive.
+
+The [routerLinkActiveOptions] directive allows you to specify additional parameters
+such as whether a path matches exactly.
+
+You can also use the [ngClass] directive which evaluates an expression given to it.
+
+Animations can be done in two ways,
+
+You can use CSS or Angular animation.
+
+CSS is easy although not truly animating your routes.
+
+Angular is more complex, need to conigure and then apply to each component.
+
+Watching Routing events
+- NavigationStart 
+- RoutesRecognised
+- NaviagationEnd
+- NavigationCancel
+- NavigationError
+
+To watch routing events we need to enableTracing in the RouterModule.
+
+Reacting to Routing Events
+
+We can display animations, display logs or other.
+
+We can subscribe to an events observable on the router object.

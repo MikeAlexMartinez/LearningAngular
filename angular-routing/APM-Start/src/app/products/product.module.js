@@ -16,6 +16,7 @@ var product_filter_pipe_1 = require("./product-filter.pipe");
 var product_service_1 = require("./product.service");
 var shared_module_1 = require("../shared/shared.module");
 var product_resolver_service_1 = require("./product-resolver.service");
+var products_resolver_service_1 = require("./products-resolver.service");
 var ProductModule = (function () {
     function ProductModule() {
     }
@@ -28,26 +29,26 @@ ProductModule = __decorate([
             router_1.RouterModule.forChild([
                 {
                     path: 'products',
-                    component: product_list_component_1.ProductListComponent
-                },
-                {
-                    path: 'products/:id',
-                    component: product_detail_component_1.ProductDetailComponent,
-                    resolve: { product: product_resolver_service_1.ProductResolver }
-                },
-                {
-                    path: 'products/:id/edit',
-                    component: product_edit_component_1.ProductEditComponent,
-                    resolve: { product: product_resolver_service_1.ProductResolver },
                     children: [
                         {
-                            path: '', redirectTo: 'info', pathMatch: 'full'
+                            path: '',
+                            component: product_list_component_1.ProductListComponent,
+                            resolve: { products: products_resolver_service_1.ProductsResolver }
                         },
                         {
-                            path: 'info', component: product_edit_info_component_1.ProductEditInfoComponent
+                            path: ':id',
+                            component: product_detail_component_1.ProductDetailComponent,
+                            resolve: { product: product_resolver_service_1.ProductResolver }
                         },
                         {
-                            path: 'tags', component: product_edit_tags_component_1.ProductEditTagsComponent
+                            path: ':id/edit',
+                            component: product_edit_component_1.ProductEditComponent,
+                            resolve: { product: product_resolver_service_1.ProductResolver },
+                            children: [
+                                { path: '', redirectTo: 'info', pathMatch: 'full' },
+                                { path: 'info', component: product_edit_info_component_1.ProductEditInfoComponent },
+                                { path: 'tags', component: product_edit_tags_component_1.ProductEditTagsComponent }
+                            ]
                         }
                     ]
                 }
@@ -63,7 +64,8 @@ ProductModule = __decorate([
         ],
         providers: [
             product_service_1.ProductService,
-            product_resolver_service_1.ProductResolver
+            product_resolver_service_1.ProductResolver,
+            products_resolver_service_1.ProductsResolver
         ]
     })
 ], ProductModule);

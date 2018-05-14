@@ -18,8 +18,8 @@ export class ProductListComponent implements OnInit {
 
     products: IProduct[];
 
-    constructor(private productService: ProductService,
-                private route: ActivatedRoute
+    constructor(
+        private route: ActivatedRoute
     ) { }
 
     toggleImage(): void {
@@ -27,13 +27,8 @@ export class ProductListComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.productService
-            .getProducts()
-            .subscribe(products => this.products = products,
-                        error => this.errorMessage = <any>error
-        );
+        this.products = this.route.snapshot.data['products'];
         let lF = this.route.snapshot.queryParamMap.get('filterBy') || undefined;
-        console.log(lF);
         this.listFilter = lF === 'undefined' ? undefined : lF;
         this.showImage = this.route.snapshot.queryParamMap.get('showImage') === 'true';
     }

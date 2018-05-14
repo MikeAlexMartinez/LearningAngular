@@ -12,33 +12,34 @@ import { ProductService } from './product.service';
 
 import { SharedModule } from '../shared/shared.module';
 import { ProductResolver } from './product-resolver.service';
+import { ProductsResolver } from './products-resolver.service';
 
 @NgModule({
   imports: [
     SharedModule,
     RouterModule.forChild([
       { 
-        path: 'products', 
-        component: ProductListComponent 
-      },
-      { 
-        path: 'products/:id',
-        component: ProductDetailComponent,
-        resolve: { product: ProductResolver }
-      },
-      { 
-        path: 'products/:id/edit',
-        component: ProductEditComponent,
-        resolve: { product: ProductResolver },
+        path: 'products', // component less route
         children: [
           {
-            path: '', redirectTo: 'info', pathMatch: 'full'
+            path: '',
+            component: ProductListComponent,
+            resolve: { products: ProductsResolver }
           },
-          {
-            path: 'info', component: ProductEditInfoComponent
+          { 
+            path: ':id',
+            component: ProductDetailComponent,
+            resolve: { product: ProductResolver }
           },
-          {
-            path: 'tags', component: ProductEditTagsComponent
+          { 
+            path: ':id/edit',
+            component: ProductEditComponent,
+            resolve: { product: ProductResolver },
+            children: [
+              { path: '', redirectTo: 'info', pathMatch: 'full'},
+              { path: 'info', component: ProductEditInfoComponent },
+              { path: 'tags', component: ProductEditTagsComponent }
+            ]
           }
         ]
       }
@@ -54,7 +55,8 @@ import { ProductResolver } from './product-resolver.service';
   ],
   providers: [
     ProductService,
-    ProductResolver
+    ProductResolver,
+    ProductsResolver
   ]
 })
 export class ProductModule {}
