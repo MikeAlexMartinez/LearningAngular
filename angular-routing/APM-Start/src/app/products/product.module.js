@@ -47,7 +47,7 @@ ProductModule = __decorate([
                             path: 'info', component: product_edit_info_component_1.ProductEditInfoComponent
                         },
                         {
-                            path: 'label', component: product_edit_tags_component_1.ProductEditTagsComponent
+                            path: 'tags', component: product_edit_tags_component_1.ProductEditTagsComponent
                         }
                     ]
                 }

@@ -38,7 +38,7 @@ import { ProductResolver } from './product-resolver.service';
             path: 'info', component: ProductEditInfoComponent
           },
           {
-            path: 'label', component: ProductEditTagsComponent
+            path: 'tags', component: ProductEditTagsComponent
           }
         ]
       }

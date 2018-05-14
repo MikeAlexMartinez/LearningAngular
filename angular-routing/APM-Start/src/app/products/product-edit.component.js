@@ -19,6 +19,7 @@ var ProductEditComponent = (function () {
         this.route = route;
         this.router = router;
         this.pageTitle = 'Product Edit';
+        this.dataIsValid = {};
     }
     ProductEditComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -48,9 +49,17 @@ var ProductEditComponent = (function () {
             }
         }
     };
+    ProductEditComponent.prototype.isValid = function (tab) {
+        var _this = this;
+        this.validate();
+        if (tab)
+            return this.dataIsValid[tab];
+        return Object.keys(this.dataIsValid).every(function (key) { return _this.dataIsValid[key]; });
+    };
     ProductEditComponent.prototype.saveProduct = function () {
         var _this = this;
-        if (true === true) {
+        var shouldAllowSave = true;
+        if (this.isValid(null)) {
             this.productService.saveProduct(this.product)
                 .subscribe(function () { return _this.onSaveComplete(_this.product.productName + " was saved"); }, function (error) { return _this.errorMessage = error; });
         }
@@ -64,6 +73,27 @@ var ProductEditComponent = (function () {
         }
         // Navigate back to the product list
         this.router.navigate(['/products'], { queryParamsHandling: "preserve" });
+    };
+    ProductEditComponent.prototype.validate = function () {
+        // clear the validation object
+        this.dataIsValid = {};
+        // info tab
+        if (this.product.productName &&
+            this.product.productName.length >= 3 &&
+            this.product.productCode) {
+            this.dataIsValid['info'] = true;
+        }
+        else {
+            this.dataIsValid['info'] = false;
+        }
+        // tags tab
+        if (this.product.category &&
+            this.product.category.length >= 1) {
+            this.dataIsValid['tags'] = true;
+        }
+        else {
+            this.dataIsValid['tags'] = false;
+        }
     };
     return ProductEditComponent;
 }());

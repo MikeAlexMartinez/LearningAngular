@@ -14,9 +14,10 @@ var ProductEditTagsComponent = (function () {
     function ProductEditTagsComponent(route) {
         this.route = route;
         this.newTags = '';
-        this.product = { id: 1, category: 'test', tags: ['test'] };
     }
     ProductEditTagsComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.route.parent.data.subscribe(function (data) { return _this.product = data['product']; });
     };
     // Add the defined tags
     ProductEditTagsComponent.prototype.addTags = function () {

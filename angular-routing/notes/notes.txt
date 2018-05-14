@@ -217,3 +217,9 @@ Allow for:
 - required for lazy loading.
 
 child routes are defined within teh children property of the parents route.
+
+To load data for a child route you can use a product data service or a child route resolver, or where data is Shared
+across tabs you can use a route resolver in the parent.
+
+When using a link frmo parent to child we want to use
+the ViewChild (from @ng/core) decorator.

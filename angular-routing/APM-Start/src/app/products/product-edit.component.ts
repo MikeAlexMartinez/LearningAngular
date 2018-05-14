@@ -15,6 +15,7 @@ export class ProductEditComponent implements OnInit {
     errorMessage: string;
 
     product: IProduct;
+    private dataIsValid: { [key: string]: boolean } = {};
 
     constructor(private productService: ProductService,
                 private messageService: MessageService,
@@ -53,8 +54,20 @@ export class ProductEditComponent implements OnInit {
         }
     }
 
+    isValid(tab: string): boolean {
+        this.validate();
+
+        if (tab) return this.dataIsValid[tab];
+
+        return Object.keys(this.dataIsValid).every(
+            (key) => this.dataIsValid[key]
+        ); 
+    }
+
     saveProduct(): void {
-        if (true === true) {
+        let shouldAllowSave: boolean = true;
+
+        if (this.isValid(null)) {
             this.productService.saveProduct(this.product)
                 .subscribe(
                     () => this.onSaveComplete(`${this.product.productName} was saved`),
@@ -72,5 +85,29 @@ export class ProductEditComponent implements OnInit {
 
         // Navigate back to the product list
         this.router.navigate(['/products'], { queryParamsHandling: "preserve" });
+    }
+
+    validate(): void {
+        // clear the validation object
+        this.dataIsValid = {};
+
+        // info tab
+        if (this.product.productName &&
+            this.product.productName.length >= 3 &&
+            this.product.productCode
+        ) {
+            this.dataIsValid['info'] = true;
+        } else {
+            this.dataIsValid['info'] = false;
+        }
+
+        // tags tab
+        if (this.product.category &&
+            this.product.category.length >= 1
+        ) {
+            this.dataIsValid['tags'] = true;
+        } else {
+            this.dataIsValid['tags'] = false;
+        }
     }
 }
