@@ -189,6 +189,36 @@ function myCustomValidator(param: any): ValidatorFn {
 To create groups of components that are validated together we need to utilise 
 nested formGroups, and then we can define the validator on the group.
 
+## Reacting to Changes
 
+valueChanges property emits events on value changes.
+
+valueChanges is an Observable<any>
+
+Onbservable is a collection of events that arrive asynchronously over time.
+
+Subscribe to the obsrevable to watch the events.
+
+statusChanges property emits events on valiation changes.
+
+You are able to watch for value changes in a number of ways. you can subscribe to value changes on a specific field:
+
+this.myFormControl.valueChanges.subscribe(val => console.log(val))
+
+you can watch a form group
+
+this.myFormGroup.valueChanges.subscribe(val => 
+  console.log(JSON.stringify(val)))
+
+you can watch the whole form
+
+this.customerForm.valueChanges.subscribe(val => 
+  console.log(JSON.stringify(val)))
+
+We can react to watching user input in a number of ways, we might:
+- change validation rules,
+- change validation messages,
+- alter user interface elements.
+- provide automatic suggestions
 
 ## CRUD

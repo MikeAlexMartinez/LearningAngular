@@ -32,8 +32,13 @@ var CustomerComponent = (function () {
     function CustomerComponent(fb) {
         this.fb = fb;
         this.customer = new customer_1.Customer();
+        this.validationMessages = {
+            require: 'Please enter your email address.',
+            pattern: 'Please enter a valid email address.',
+        };
     }
     CustomerComponent.prototype.ngOnInit = function () {
+        var _this = this;
         this.customerForm = this.fb.group({
             firstName: [
                 { value: '', disabled: false },
@@ -61,6 +66,27 @@ var CustomerComponent = (function () {
             ],
             sendCatalog: { value: false, disabled: false },
         });
+        // watches for changes on the notification button
+        this.customerForm.get('notification')
+            .valueChanges
+            .subscribe(function (value) {
+            console.log(value);
+            _this.setNotification(value);
+        });
+        // email watcher
+        var emailControl = this.customerForm.get('emailGroup.email');
+        emailControl.valueChanges.subscribe(function (value) {
+            return _this.setMessage(emailControl);
+        });
+    };
+    CustomerComponent.prototype.setMessage = function (c) {
+        var _this = this;
+        this.emailMessage = '';
+        if ((c.touched || c.dirty) && c.errors) {
+            this.emailMessage = Object.keys(c.errors).map(function (key) {
+                return _this.validationMessages[key];
+            }).join(' ');
+        }
     };
     CustomerComponent.prototype.populateTestData = function () {
         this.customerForm.setValue({
