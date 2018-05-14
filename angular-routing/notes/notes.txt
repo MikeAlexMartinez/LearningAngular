@@ -270,3 +270,103 @@ Reacting to Routing Events
 We can display animations, display logs or other.
 
 We can subscribe to an events observable on the router object.
+
+## Secondary Routes
+
+To define a secondary set of routes we need to add additional router-outlet.
+
+We can use it to suypoprt dashboards, multi-window interface,
+notes, comments, and or messages.
+
+All secondary outlets must have a defined unique name.
+
+To activate secondary outlets we must define the route in a different way.
+They must be configured with an outlet property naming the outlet (deinfed in "name").
+
+e.g. [routerLink]="[{ outlets: { popup: ['messages'] } }]">
+
+They are configured similarly to primary.
+
+You can activate a secondary route in code using the following syntax:
+
+// this identifies multiple routes at once.
+this.router.navigate([{ outlets: {
+    primary: [ '/products', product.id, 'edit' ],
+    popup: [ 'summary', product.id ]
+}}])
+
+To clear secondary outlet we can use a routerLink directive or we can use code.
+We set the outlet to null.
+
+or navigateByUrl() and leave secodary outlet off.
+
+## Route Guards
+
+There are several guards
+
+Guard processing done in following order:
+canDeactivate - guard navigation away from a route
+canLoad - prevent asynchronous routing
+canActivateChild - guard navigation to a child route
+canActivate - guard navigation to route
+resolve - prefetch data before activating a route
+
+Limit access to route, warn before leaving a route.
+Retrieve data before accessing a route.
+
+A route guard is normally built as a service. It can be a function.
+
+We need to implement the target guard type interface.
+
+It needs to be registered with at the angular module level.
+
+We must add it to the route object in the router module definition and then add
+the service to the appropriate propery e.g. "canActivate"
+
+You can add a guard to child routes or a parent route (which would then guard all
+children too)
+
+canActivate:
+- Checks criteria before activating a route
+Commonly used to:
+    - Limit route to specific users.
+    - Ensure prerequisites are met.
+Called when the Url cchanges to the route.
+
+To share data we can use route parameters / etc
+
+prefetched data can be used for validation as it's resolved last.
+
+Best to use a service to hold a service as it's a singleton and will retain 
+data during a login
+
+canActivateChild
+- checks criteria before activating child route.
+- limits access to child routes,
+- ensures prerequisites are met.
+Called when Url changes to the child route.
+
+difference between canActivate is that canActivate won't be
+called again if you stay within the same route area, whereas
+canActivateChild will be.
+
+canDeactivate
+- checks before leaving route.
+- checks for unsaved changes.
+- confirm leaving operation.
+- only works within the application.
+
+checklist:
+build a service
+implement guard type
+create method
+register service provider
+add to route
+
+
+## Lazy loading.
+
+Requirements:
+- Lazy loaded module must be a feature module.
+- must be grouped under a single parent.
+- can't be imported in another module.

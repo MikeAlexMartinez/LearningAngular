@@ -17,6 +17,8 @@ var product_service_1 = require("./product.service");
 var shared_module_1 = require("../shared/shared.module");
 var product_resolver_service_1 = require("./product-resolver.service");
 var products_resolver_service_1 = require("./products-resolver.service");
+var auth_guard_service_1 = require("../user/auth-guard.service");
+var product_guard_service_1 = require("./product-guard.service");
 var ProductModule = (function () {
     function ProductModule() {
     }
@@ -29,6 +31,7 @@ ProductModule = __decorate([
             router_1.RouterModule.forChild([
                 {
                     path: 'products',
+                    canActivate: [auth_guard_service_1.AuthGuard],
                     children: [
                         {
                             path: '',
@@ -43,6 +46,7 @@ ProductModule = __decorate([
                         {
                             path: ':id/edit',
                             component: product_edit_component_1.ProductEditComponent,
+                            canDeactivate: [product_guard_service_1.ProductEditGuard],
                             resolve: { product: product_resolver_service_1.ProductResolver },
                             children: [
                                 { path: '', redirectTo: 'info', pathMatch: 'full' },
@@ -65,7 +69,8 @@ ProductModule = __decorate([
         providers: [
             product_service_1.ProductService,
             product_resolver_service_1.ProductResolver,
-            products_resolver_service_1.ProductsResolver
+            products_resolver_service_1.ProductsResolver,
+            product_guard_service_1.ProductEditGuard
         ]
     })
 ], ProductModule);

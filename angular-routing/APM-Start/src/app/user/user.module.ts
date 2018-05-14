@@ -5,6 +5,7 @@ import { LoginComponent } from './login.component';
 import { AuthService } from './auth.service';
 
 import { SharedModule } from '../shared/shared.module';
+import { AuthGuard } from './auth-guard.service';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { SharedModule } from '../shared/shared.module';
     LoginComponent
   ],
   providers: [
-    AuthService
+    AuthService,
+    AuthGuard
   ]
 })
 export class UserModule { }

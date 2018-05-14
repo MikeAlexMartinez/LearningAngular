@@ -11,38 +11,28 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var auth_service_1 = require("./auth.service");
-var LoginComponent = (function () {
-    function LoginComponent(authService, router) {
+var AuthGuard = (function () {
+    function AuthGuard(authService, router) {
         this.authService = authService;
         this.router = router;
-        this.pageTitle = 'Log In';
     }
-    LoginComponent.prototype.login = function (loginForm) {
-        if (loginForm && loginForm.valid) {
-            var userName = loginForm.form.value.userName;
-            var password = loginForm.form.value.password;
-            this.authService.login(userName, password);
-            // Navigate to the Product List page after log in.
-            if (this.authService.redirectUrl) {
-                this.router.navigateByUrl(this.authService.redirectUrl);
-            }
-            else {
-                this.router.navigate(['/products']);
-            }
-        }
-        else {
-            this.errorMessage = 'Please enter a user name and password.';
-        }
-        ;
+    AuthGuard.prototype.canActivate = function (route, state) {
+        return this.checkLoggedIn(state.url);
     };
-    return LoginComponent;
+    AuthGuard.prototype.checkLoggedIn = function (url) {
+        if (this.authService.isLoggedIn()) {
+            return true;
+        }
+        this.authService.redirectUrl = url;
+        this.router.navigate(['/login']);
+        return false;
+    };
+    return AuthGuard;
 }());
-LoginComponent = __decorate([
-    core_1.Component({
-        templateUrl: './app/user/login.component.html'
-    }),
+AuthGuard = __decorate([
+    core_1.Injectable(),
     __metadata("design:paramtypes", [auth_service_1.AuthService,
         router_1.Router])
-], LoginComponent);
-exports.LoginComponent = LoginComponent;
-//# sourceMappingURL=login.component.js.map
+], AuthGuard);
+exports.AuthGuard = AuthGuard;
+//# sourceMappingURL=auth-guard.service.js.map

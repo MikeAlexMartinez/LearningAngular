@@ -11,11 +11,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var auth_service_1 = require("./user/auth.service");
+var message_service_1 = require("./messages/message.service");
 var AppComponent = (function () {
-    function AppComponent(authService, router) {
+    function AppComponent(authService, router, messageService) {
         var _this = this;
         this.authService = authService;
         this.router = router;
+        this.messageService = messageService;
         this.pageTitle = 'Acme Product Management';
         this.loading = true;
         router.events.subscribe(function (routerEvent) {
@@ -38,6 +40,18 @@ var AppComponent = (function () {
         // ensure other parameters are removed when user logs out
         this.router.navigateByUrl('/welcome');
     };
+    AppComponent.prototype.displayMessages = function () {
+        this.router.navigate([{
+                outlets: {
+                    popup: ['messages']
+                }
+            }]);
+        this.messageService.isDisplayed = true;
+    };
+    AppComponent.prototype.hideMessages = function () {
+        this.router.navigate([{ outlets: { popup: null } }]);
+        this.messageService.isDisplayed = false;
+    };
     return AppComponent;
 }());
 AppComponent = __decorate([
@@ -46,7 +60,8 @@ AppComponent = __decorate([
         templateUrl: './app/app.component.html'
     }),
     __metadata("design:paramtypes", [auth_service_1.AuthService,
-        router_1.Router])
+        router_1.Router,
+        message_service_1.MessageService])
 ], AppComponent);
 exports.AppComponent = AppComponent;
 //# sourceMappingURL=app.component.js.map

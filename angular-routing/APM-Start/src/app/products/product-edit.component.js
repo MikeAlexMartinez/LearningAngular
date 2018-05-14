@@ -21,6 +21,18 @@ var ProductEditComponent = (function () {
         this.pageTitle = 'Product Edit';
         this.dataIsValid = {};
     }
+    Object.defineProperty(ProductEditComponent.prototype, "product", {
+        get: function () {
+            return this.currentProduct;
+        },
+        set: function (value) {
+            this.currentProduct = value;
+            // clone product to retain copy
+            this.originalProduct = Object.assign({}, value);
+        },
+        enumerable: true,
+        configurable: true
+    });
     ProductEditComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.route.data.subscribe(function (data) {
@@ -36,6 +48,13 @@ var ProductEditComponent = (function () {
             this.pageTitle = "Edit Product: " + this.product.productName;
         }
     };
+    Object.defineProperty(ProductEditComponent.prototype, "isDirty", {
+        get: function () {
+            return JSON.stringify(this.originalProduct) !== JSON.stringify(this.currentProduct);
+        },
+        enumerable: true,
+        configurable: true
+    });
     ProductEditComponent.prototype.deleteProduct = function () {
         var _this = this;
         if (this.product.id === 0) {
@@ -67,10 +86,15 @@ var ProductEditComponent = (function () {
             this.errorMessage = 'Please correct the validation errors.';
         }
     };
+    ProductEditComponent.prototype.reset = function () {
+        this.dataIsValid = null;
+        this.originalProduct = Object.assign({}, this.currentProduct);
+    };
     ProductEditComponent.prototype.onSaveComplete = function (message) {
         if (message) {
             this.messageService.addMessage(message);
         }
+        this.reset();
         // Navigate back to the product list
         this.router.navigate(['/products'], { queryParamsHandling: "preserve" });
     };

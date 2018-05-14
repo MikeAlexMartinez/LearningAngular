@@ -6,19 +6,20 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 var core_1 = require("@angular/core");
-var MessageService = (function () {
-    function MessageService() {
-        this.messages = [];
-        this.isDisplayed = false;
+var ProductEditGuard = (function () {
+    function ProductEditGuard() {
     }
-    MessageService.prototype.addMessage = function (message) {
-        var currentDate = new Date();
-        this.messages.unshift(message + ' at ' + currentDate.toLocaleString());
+    ProductEditGuard.prototype.canDeactivate = function (component) {
+        if (component.isDirty) {
+            var productName = component.product.productName || 'New Product';
+            return confirm("Navigate away and lose all changes to " + productName + "?");
+        }
+        return true;
     };
-    return MessageService;
+    return ProductEditGuard;
 }());
-MessageService = __decorate([
+ProductEditGuard = __decorate([
     core_1.Injectable()
-], MessageService);
-exports.MessageService = MessageService;
-//# sourceMappingURL=message.service.js.map
+], ProductEditGuard);
+exports.ProductEditGuard = ProductEditGuard;
+//# sourceMappingURL=product-guard.service.js.map
