@@ -1,0 +1,112 @@
+## Ionic 3, Angular and Typescript Applications.
+
+Ionic 3 for everything!
+
+## How to install...
+
+Built on top of Angular.
+
+Built for Native Cordove Apps.
+- JS API wraps native API.
+- Native Mobile Apps.
+- Plugin Ecosystem
+- Millions of Downloads
+
+Why Ionic 2?
+-  Angular 2 / Typescript.
+-  Navigation.
+-  Platform Theming.
+-  Build Tools.
+-  Performance.
+
+Course Repository: https://github.com/smichelotti/Ionic2Course
+
+ionic start --list informs of available templates you can begin coding with.
+
+ionic --list gives over commands
+
+ionic serve from within project directory will serve project with live-reloading.
+
+the:
+'ionic platform add android'
+command adds platform specific resources to project so that we can use the android emulator.
+
+you must use the actual device if you want to test properly.
+
+App Structure:
+- src - most of app is in here.
+      - index.html is main SPA.
+      - app contains app.module.ts (start of angular app)
+      - pages folder is where different pages of the app are stored.
+        - each page folder has: html, scss and, ts file for class related code.
+      - theme provides global variables.
+- don't modify anything in www file.
+- config.xml is for Cordova app.
+
+
+## Navigation
+
+The Navigation Stack:
+  New pages are pushed onto the stack during navigation.
+  Pages are popped off when you go back.
+  Supports Multiple Navigation stacks
+  Each app has a Root stack
+
+To navigate we use the NavController services .push() and .pop() functions.
+
+Navbar comes with an automatic back button.
+Navbars must be placed within an ion-header element.
+
+We can pass any valid JS object as a Nav Parameter
+
+Tabs within a component creates another navigation stack which can cause strange bugs.
+Be careful!
+
+## Working with HTTP and Lifecycle Events
+
+Set up backend
+
+
+Create service to interact with HTTP
+Work with Promises
+Lifecycle Events Overview
+Load Data within lifecycle
+Working RxJS
+Loading component
+Working with third party Libs
+
+Lifecycle Events:
+- ionViewDidLoad - only loads when the page is added to the navigation stack (page is cached)
+- ionViewWillEnter - runs every time before view is navigated to
+- ionViewDidEnter - Always fires, right after shown to user.
+- ionViewWillLeave - 
+- ionViewDidLeave
+- ionViewWillUnload
+- ionViewCanEnter - good for authentication
+- ionViewCanLeave - good for guards, early page exit (save unsaved data e.g.)
+
+
+## Ionic components
+
+Optimised for mobile-apps
+
+Ionic-Lists
+
+
+List Dividers
+Buttons
+Ionicons
+caeds
+custom classgrids
+ionic datetime
+toggle
+badges
+alerts
+toasts
+
+
+
+
+## More Ionic components
+
+## Ionic Native
