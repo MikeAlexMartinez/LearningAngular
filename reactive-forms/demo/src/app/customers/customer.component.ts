@@ -1,12 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn, FormArray } from '@angular/forms';
+
+import 'rxjs/add/operator/debounceTime';
 
 import { Customer } from './customer';
 
 function ratingRange(min: number, max: number): ValidatorFn {
-    return (c: AbstractControl): {[key: string]: boolean} | null => {
+    return (c: AbstractControl): {[key: string]: boolean} | null => {        
         if (c.value != undefined && (isNaN(c.value) || c.value < min || c.value > max)) {
             return { 'range': true };
+        }
+        if (c.value == undefined) {
+            return { 'empty': true };
         }
         return null;
     };
@@ -31,6 +36,10 @@ export class CustomerComponent implements OnInit {
     customerForm: FormGroup;
     customer: Customer = new Customer();
     emailMessage: string;
+
+    get addresses(): FormArray {
+        return <FormArray>this.customerForm.get('addresses');
+    }
 
     private validationMessages = {
         require: 'Please enter your email address.',
@@ -68,6 +77,7 @@ export class CustomerComponent implements OnInit {
                 ratingRange(1, 5)
             ],
             sendCatalog: {value: false, disabled: false},
+            addresses: this.fb.array([ this.buildAddress() ])
         });
 
         // watches for changes on the notification button
@@ -80,8 +90,26 @@ export class CustomerComponent implements OnInit {
 
         // email watcher
         const emailControl = this.customerForm.get('emailGroup.email');
-        emailControl.valueChanges.subscribe((value: string) =>
-            this.setMessage(emailControl));
+        emailControl.valueChanges
+            .debounceTime(1000)
+            .subscribe((value: string) =>
+                this.setMessage(emailControl)
+            );
+    }
+
+    buildAddress(): FormGroup {
+        return this.fb.group({
+            addressType: 'home',
+            street1: '',
+            street2: '',
+            city: '',
+            state: '',
+            zip: ''
+        });
+    }
+
+    addAddress(): void { 
+        this.addresses.push(this.buildAddress());
     }
 
     setMessage(c: AbstractControl): void {

@@ -221,4 +221,39 @@ We can react to watching user input in a number of ways, we might:
 - alter user interface elements.
 - provide automatic suggestions
 
+Reactive transformations
+- debounceTime() time waits until time passes without another event.
+  allows the user to write characters, and error won't be shown until
+  actions have stopped for a certain amount of time.
+- thottleTime() emits a value and then ignores events for a certain amount 
+  of time.
+- distinctUntilChanged() suppresses duplicate consecutive items.
+
+There are many more...
+
+## Dynamically add input elements to the form
+
+Steps to Dynamically Duplicate Input Elements
+1- Define the input elements(s) to Duplicate
+2- Define a FormGroup, if needed
+3- Refactor to make copies
+  Need function that defines a way to easily create
+  a formGorup. Use this funciton to instantiate
+  your initial group.
+
+4- Create a FormArray
+  perfect for storing lists of formgroups/ form controls of
+  an indeterminate length.
+
+  Need to define formArrayName and then give formGroupName the appropriate
+  indexed value.
+
+
+5- Loop through FormArray and show necessary elements
+
+6- Duplicate elements.
+
+Add function to trigger constructing new group and pushing onto Array
+
 ## CRUD
+
