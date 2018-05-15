@@ -255,5 +255,30 @@ Steps to Dynamically Duplicate Input Elements
 
 Add function to trigger constructing new group and pushing onto Array
 
+## Reactive Forms in Context
+
+Add a route configuration
+
+Add user interface element(s) to activate the route.
+
+Read route parameters
+
+Set up Deactivate guard
+
+Refactor validators to a custom validator class to increase
+reusability.
+
 ## CRUD
 
+Register servive with an Angular Injector.
+- Add Http Module to the imports array of one of the application's Angular Modules
+Build Data Access Service
+- import what we need
+- Deine dependencies in constructor
+- Crate method for each http request.
+- use map operator to transform data as necessary.
+
+Inject the Data Access service
+- Call subscribe method of the returned observable.
+- provide function to emitted item.
+- provide error function too.
