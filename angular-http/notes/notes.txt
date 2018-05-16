@@ -1,0 +1,42 @@
+## Angular Http
+
+
+Makes heavy use of Observables and RxJS.
+
+Newer http modules found in @angular/common/http
+older now deprecated modules found in @angular/http
+
+HttpClientModule needs to be imported into the core 
+AngularModule
+
+# Consuming REST Seervices
+
+Create (post)
+  - POST - http://localhost/api/books
+  - If successful, returns HTTP 201 Created
+
+Read (get)
+  - GET - http://localhost/api/books OR https://localhost/api/books/5
+  - if successful, returns HTTP 200 OK
+
+Update (patch)
+  - PUT - http://localhost/api/books/5
+  - If successful, returns HTTP 204 No content
+
+Delete (delete)
+  - DELETE - https://localhost/api/books/5
+  - If successful, returns HTTP 204 No content
+
+Observables require a subscrition.
+  - takes three optional functions,
+  - success, error and complete.
+
+
+
+# Advanced HTTP Requests and Error Handling
+
+# Creating Interceptor
+
+# Caching HTTP Requests with Interceptors
+
+# Testing HTTP Requests
