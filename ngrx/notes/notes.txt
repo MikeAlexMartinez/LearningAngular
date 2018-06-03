@@ -1,0 +1,119 @@
+===================
+# Ngrx in Angular #
+===================
+
+Ngrx applies the 'flux' / 'redux' like state management pattern in order to make
+state management more logical and simple to manage.
+
+Presentational components should be as 'dumb' and as simple as possible.
+presentational components should be concerned with rendering the UI and not with 
+containing the complex business logic.
+
+Allows you to inject a single thing into the components of the application.
+
+Allows you to implement OnPush change detection.
+
+Components display state, and can dispatch actions to change state
+in the store.
+
+Reducers listen for actions that are dispatched and carry them out.
+
+You shouldn't perform effects (impure usually async actions that cause side-effects, e.g. server
+communications) within a reducer, these should be handled elsewhere. Effects would communicate
+with a http service.
+
+when effects are used, you would strip out the prior reducer and would the reducer would capture
+actions dispatched by the effects function and then the state will be updated after a successful
+server-side communications actions.
+
+
+=====================================================================
+# Notes from https://gist.github.com/btroncone/a6e4347326749f938510 #
+=====================================================================
+
+Overview
+
+Application built aroun three main pieces:
+  - Reducers
+  - Actions
+  - A Single Application Store
+
+Store : A client side single source of truth.
+  It can supply a complete representation of relevant application state.
+  In Angular 2 Plus it also offers performance benefits.
+
+Reducer: A pure function accepting two arguments, the current state, and
+  action with a type and an optional payload. A reducer slices the current
+  state and then transforms it using the action and optional payload to create
+  a new state object.
+
+Actions: actions communicate to reducers when state needs to change.
+
+Action Pipeline:
+  Dispatch => Reducer => New State => Store
+
+Proejcting Data:
+  We can treat the objects in the store as observables which means yu can use all the
+  RxJS based observable operators. Which allows you to view slices of data as necessary.
+
+Advantages:
+  Centralized, Immutable State.
+  Performance
+  Testability
+  Tooling and Ecosystem
+
+Building Blocks of @ngrx/store
+  Subject / Dispatcher (see examples/store-dispatcher.ts)
+    These both extend RxJS Subjects. They are both Observables and 
+    Observers meaning you can subscribe to a subject, and a subject
+    can subscribe to a store. They can be thought of as messengers or
+    proxies.
+
+  BehaviorSubject (see examples/behaviorsubject.ts)
+    One issue with the Rx.Subject object is that when converted to a 
+    Dispatcher it will only send values to subscribers once they have
+    subscribed to the store. RxJS offers a BehaviorSubject which offers
+    everything that a Subject offers except it also emits the last
+    emitted value upon subscription meaning observers have a access
+    to the latest up to date information.
+
+Store And Dispatcher Data Flow
+  In order for store to function appropriately the actions dispatched need
+  to be passed through a pipeline.
+  The pipeline is as follows:
+    Dispatched Action
+    Pre-Middleware
+    Reducers (return new State)
+    Post-Middleware
+    store.next(newState)
+  calling store.dispatch is equivalent to calling dispatcher.dispatch.
+
+Reducers: (see store-redux-style.js for example of reducers)
+  Reducers take a iterable list of actions and perform the actions
+  iteratively, each time amending the state of the object passed in.
+  In the context of a store, each time an action is called, all the 
+  reducers of the store will either perform an action to change the 
+  state of the app in some way or will return their current state 
+  unchanged.
+
+Aggregating state with scan. (see scan.js)
+  The 'scan' observable operator is similar to reduce except it 
+  accumulates value over time (asynchronously).
+
+Although this was removed in v2 it used to be possible to take
+the whole observable with the 'let' operator and then you could
+amend the operator as necessary.
+
+## Slicing state with map
+
+map provides a specified function to each item, returning a new 
+representation of that item.
+
+## managing updates with distinctUntilChanged
+
+the distinctUntilChanged operator will only emit a new value when the next 
+value is different to the previously emitted value. As reducers only return 
+the previous value if no change has been made, this means your application
+only receives updates if the value has changed, making the store more 
+efficient.
+

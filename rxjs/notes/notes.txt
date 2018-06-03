@@ -1,0 +1,27 @@
+===================
+# Ngrx in Angular #
+===================
+
+Ngrx applies the 'flux' / 'redux' like state management pattern in order to make
+state management more logical and simple to manage.
+
+Presentational components should be as 'dumb' and as simple as possible.
+presentational components should be concerned with rendering the UI and not with 
+containing the complex business logic.
+
+Allows you to inject a single thing into the components of the application.
+
+Allows you to implement OnPush change detection.
+
+Components display state, and can dispatch actions to change state
+in the store.
+
+Reducers listen for actions that are dispatched and carry them out.
+
+You shouldn't perform effects (impure usually async actions that cause side-effects, e.g. server
+communications) within a reducer, these should be handled elsewhere. Effects would communicate
+with a http service.
+
+when effects are used, you would strip out the prior reducer and would the reducer would capture
+actions dispatched by the effects function and then the state will be updated after a successful
+server-side communications actions.

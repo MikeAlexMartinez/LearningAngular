@@ -24,7 +24,7 @@ export class FormPoster {
 
   private extractLanguages(res) {
     console.log('extracting languages...');
-    let languages = res.data.languages || [];
+    const languages = res.data.languages || [];
     return languages;
   }
 
