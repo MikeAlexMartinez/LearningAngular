@@ -117,3 +117,62 @@ the previous value if no change has been made, this means your application
 only receives updates if the value has changed, making the store more 
 efficient.
 
+
+####################################
+==                                ==
+==  Creating an NgRX application  ==
+==                                ==
+####################################
+
+Steps:
+
+Define Constants (to name actions):
+  Define what actions can be performed to change the state of the application.
+
+Create Reducers:
+  That can change state of store in an immutable way.
+
+Utilizing Container components
+  
+  Smart or Container Components
+    Smart, or Container components should be your root level, routable 
+    components. These components have direct access to the store or a 
+    derivative. Smart components handle view events and the dispatching of 
+    actions. Whether through the service or directly.
+
+  Dumb, or Child components
+    Dumb, or child components are for presentation only relying on @input
+    parameters, acting on received data in an appropriate manner. When 
+    relevant event occur in dumb components they are emitted up to be handled 
+    by a parent/smart component.
+
+Utilizing the Async Pipe
+  the 'async' pipe is a unique stateful pipe for handling async objects. The 
+  pipe handles both subscribing and unsubscribing to the supplied observable.
+
+Taking advantage of ChangeDetection.OnPush
+  when components rely solely on inputs, and those input references do not 
+  change, Angular can skip running change detection on that section of the
+  component tree. Delegating of state should be handled in smart, top level
+  components.
+
+Expanding state
+  Most applications will be made up of multiple reducers each managing their
+  own slice of state.
+
+Slicing state for views
+  The store should be thought of as your client-side database. The store 
+  provides a helper function 'select' which utilises 'map' and 
+  'distinctUntilChanged' behind the scenes to return an observable of
+  the appropriate slice of state.
+
+Projecting State for View with 'combineLatest' and 'withLatestFrom'
+  combineLatest and withLatestFrom allow for an observer
+  to easily subscribe to and react to changes in multiple
+  Observables, with the latest values from each slice being
+  sent over when any of the susbcribed to items change.
+
+Extracting Selectors for Reuse
+  We can utilise the pipe operator and the 'selector' pattern
+  to make reusable functions that can easily, extract and
+  subscribe to changes withing the store.
