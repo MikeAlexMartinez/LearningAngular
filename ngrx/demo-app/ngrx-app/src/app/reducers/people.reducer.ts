@@ -1,49 +1,54 @@
-import * as c from "../constants/constants";
+import { PeopleActionTypes,
+  PeopleActionsUnion} from '../actions/people.actions';
 
-const details = (state, action) => {
-  switch(action.type) {
-    case c.ADD_GUEST:
-      if (state.id === action.payload) {
-        return Object.assign({}, state, {guests: state.guests + 1});
+import { Person } from '../models/Person';
+
+const initialState = [];
+
+// private reducer to be used within the people reducer
+function details (
+  state: Person,
+  action: PeopleActionsUnion
+) {
+  switch (action.type) {
+    case PeopleActionTypes.ADD_GUEST:
+    if (state.id === action.payload.id) {
+      return Object.assign({}, state, {guests: state.guests + 1});
       }
       return state;
-    
-    case c.REMOVE_GUEST:
-      if (state.id === action.payload) {
-        return Object.assign({}, state, {guests: state.guests -1});
+    case PeopleActionTypes.REMOVE_GUEST:
+      if (state.id === action.payload.id) {
+        return Object.assign({}, state, {guests: state.guests - 1});
       }
       return state;
-    
-    case c.TOGGLE_ATTENDING:
-      if (state.id === action.payload) {
+    case PeopleActionTypes.TOGGLE_ATTENDING:
+    if (state.id === action.payload.id) {
         return Object.assign({}, state, {attending: !state.attending});
       }
       return state;
-
     default:
       return state;
+    }
   }
-}
 
 // Remember to avoid mutation within reducers
-export const people = (state = [], action) => {
+export function people (
+  state: Person[] = initialState,
+  action: PeopleActionsUnion
+) {
   switch (action.type) {
-    case c.ADD_PERSON:
+    case PeopleActionTypes.ADD_PERSON:
       return [
         ...state,
-        Object.assign({}, {id: action.payload.id, name: action.payload.name, guests: 0, attending: false})
+        Object.assign({}, action.payload)
       ];
-    case c.REMOVE_PERSON:
-      return state.filter(person => person.id !== action.payload);
-    
+    case PeopleActionTypes.REMOVE_PERSON:
+      return state.filter(person => person.id !== action.payload.id);
+
     // to shorten our case statements, delegate detail to second private reducer
-    case c.ADD_GUEST:
-      return state.map(person => details(person, action));
-
-    case c.REMOVE_GUEST:
-      return state.map(person => details(person, action));
-
-    case c.TOGGLE_ATTENDING:
+    case PeopleActionTypes.ADD_GUEST:
+    case PeopleActionTypes.REMOVE_GUEST:
+    case PeopleActionTypes.TOGGLE_ATTENDING:
       return state.map(person => details(person, action));
 
     // always have a default return of previous state when action is not relevant

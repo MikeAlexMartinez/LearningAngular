@@ -176,3 +176,10 @@ Extracting Selectors for Reuse
   We can utilise the pipe operator and the 'selector' pattern
   to make reusable functions that can easily, extract and
   subscribe to changes withing the store.
+
+Using Middleware (meta-reducers)
+  Middleware was removed from ngrx in version 2. Instead they use metareducers.
+  To create a metareducer you wrap a reducer in another function, allowing you
+  to delegate most of the actions as usual except when specific conditions are met
+  one can step in.
+    combineReducers is an example of a metareducer;

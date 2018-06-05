@@ -13,7 +13,6 @@ export class PersonListComponent {
    * components to handle.
    */
   @Input() people;
-  @Input() filter;
   @Output() addGuest = new EventEmitter();
   @Output() removeGuest = new EventEmitter();
   @Output() removePerson = new EventEmitter();

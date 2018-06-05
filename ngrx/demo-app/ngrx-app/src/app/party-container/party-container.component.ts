@@ -1,17 +1,25 @@
+// Third party Libs
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
 
-import { genId } from '../helper/id';
-
+// Store selectors
 import * as s from '../selectors/selectors';
-import { ADD_PERSON,
-         ADD_GUEST,
-         REMOVE_GUEST,
-         REMOVE_PERSON,
-         TOGGLE_ATTENDING } from '../constants/constants';
+
+// import defined actions
+import * as PeopleActions from '../actions/people.actions';
+import * as PartyFilterActions from '../actions/party-filter.actions';
+
+// Components
 import { PersonListComponent } from './d-components/person-list/person-list.component';
 import { PersonInputComponent } from './d-components/person-input/person-input.component';
+
+// Models
+import { Person } from '../models/Person';
+
+// Helper functions
+import { genId } from '../helper/id';
 
 @Component({
   selector: 'app-party-planner',
@@ -22,8 +30,17 @@ export class PartyPlannerComponent implements OnInit/*, OnDestroy*/ {
 
   public model$;
   public percentAttendance$;
-  // public filter$;
-  // public people$;
+  public filters = [
+    {friendly: 'All', action: PartyFilterActions.PartyFilterActionTypes.SHOW_ALL},
+    {
+      friendly: 'Attending',
+      action: PartyFilterActions.PartyFilterActionTypes.SHOW_ATTENDING
+    },
+    {
+      friendly: 'Attending w/ Guests',
+      action: PartyFilterActions.PartyFilterActionTypes.SHOW_WITH_GUESTS
+    }
+  ];
   // public attending$;
   // public guests$;
 
@@ -51,31 +68,45 @@ export class PartyPlannerComponent implements OnInit/*, OnDestroy*/ {
       this._store.select('people'),
       this._store.select('partyFilter')
     ).pipe(
-      s.partyModel()
+      map(([people, filter]) => {
+        console.log(`total: ${people.length}`);
+        return {
+          total: people.length,
+          people: people.filter(filter),
+          attending: people.filter(person => person.attending).length,
+          guests: people.reduce((acc, curr) => acc + curr.guests, 0)
+        };
+      })
     );
 
-    this.percentAttendance$ = this._store.pipe(s.percentAttending());
+    this.percentAttendance$ = this._store.select('people').pipe(s.percentAttending());
+  }
+
+  updateFilter(action) {
+    // actions defined in component (should probably lift logic to here)
+    this._store.dispatch({type: action});
   }
 
   // all state-changing actions get dispatched to and handles by reducers
   addPerson(name) {
-    this._store.dispatch({type: ADD_PERSON, payload: {id: genId()}});
+    const person = new Person({ name });
+    this._store.dispatch(new PeopleActions.AddPerson(person));
   }
 
   addGuest(id) {
-    this._store.dispatch({type: ADD_GUEST, payload: id});
+    this._store.dispatch(new PeopleActions.AddGuest({id}));
   }
 
   removeGuest(id) {
-    this._store.dispatch({type: REMOVE_GUEST, payload: id});
+    this._store.dispatch(new PeopleActions.RemoveGuest({id}));
   }
 
   removePerson(id) {
-    this._store.dispatch({type: REMOVE_PERSON, payload: id});
+    this._store.dispatch(new PeopleActions.RemovePerson({id}));
   }
 
   toggleAttending(id) {
-    this._store.dispatch({type: TOGGLE_ATTENDING, payload: id});
+    this._store.dispatch(new PeopleActions.ToggleAttending({id}));
   }
 
   /**

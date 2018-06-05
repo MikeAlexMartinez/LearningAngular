@@ -1,14 +1,25 @@
-import { SHOW_ATTENDING, SHOW_ALL, SHOW_WITH_GUESTS } from '../constants/constants';
+import { PartyFilterActionTypes,
+  PartyFilterActionsUnion} from '../actions/party-filter.actions';
 
-export const partyFilter = (state = person => person, action) => {
+import { Person } from '../models/Person';
+
+export type FilterFn = (arg: Person) => boolean;
+
+// return all people
+const initialState = person => true;
+
+export function reducer(
+  state: FilterFn = initialState,
+  action: PartyFilterActionsUnion
+): FilterFn {
   switch (action.type) {
-    case SHOW_ATTENDING:
+    case PartyFilterActionTypes.SHOW_ATTENDING:
       return person => person.attending;
-    case SHOW_ALL:
-      return person => person;
-    case SHOW_WITH_GUESTS:
-      return person => person.guests;
+    case PartyFilterActionTypes.SHOW_ALL:
+      return person => true;
+    case PartyFilterActionTypes.SHOW_WITH_GUESTS:
+      return person => person.guests > 0;
     default:
-      return state;
+      return person => true;
   }
-};
+}

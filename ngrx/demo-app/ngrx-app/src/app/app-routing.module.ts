@@ -1,7 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-const routes: Routes = [];
+import { PartyPlannerComponent } from './party-container/party-container.component';
+
+const routes: Routes = [
+  {path: '', pathMatch: 'full', component: PartyPlannerComponent }
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

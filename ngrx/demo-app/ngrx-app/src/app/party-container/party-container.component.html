@@ -4,9 +4,9 @@
   [attending]="(model$ | async)?.attending"
   [guests]="(model$ | async)?.guests"
 >
-  {{ guests | async | json }}
 </app-party-stats>
 <app-filter-select
+  [filters]="filters"
   (updateFilter)="updateFilter($event)"
 >
 </app-filter-select>
@@ -16,7 +16,6 @@
 </app-person-input>
 <app-person-list
   [people]="(model$ | async)?.people"
-  [filter]="(model$ | async)?.filter"
   (addGuest)="addGuest($event)"
   (removeGuest)="removeGuest($event)"
   (removePerson)="removePerson($event)"
