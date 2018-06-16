@@ -9,7 +9,7 @@ import { SelectiveStrategy } from './selective-strategy.service';
 
 const routes = [
   { path: 'welcome', component: WelcomeComponent },
-  { 
+  {
     path: 'products',
     loadChildren: 'app/products/product.module#ProductModule',
     data: { preload: false },
